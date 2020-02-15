@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -8,24 +8,21 @@ import EditIcon from "@material-ui/icons/Edit";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import useToggleState from "./hooks/useToggle";
 import EditTodoForm from "./EditTodoForm";
+import { DispatchContext } from "./contexts/todos.context";
 
-const Todo = ({ task, completed, removeTodo, toggleTodo, updateTodo, id }) => {
+const Todo = ({ task, completed, id }) => {
   const [isEditing, toggle] = useToggleState(false);
+  const dispatch = useContext(DispatchContext);
   return (
     <ListItem style={{ height: "64px" }}>
       {isEditing ? (
-        <EditTodoForm
-          toggle={toggle}
-          task={task}
-          updateTodo={updateTodo}
-          id={id}
-        />
+        <EditTodoForm toggle={toggle} task={task} id={id} />
       ) : (
         <>
           <Checkbox
             checked={completed}
             tabIndex={-1}
-            onClick={() => toggleTodo(id)}
+            onClick={() => dispatch({ type: "TOGGLE", todoId: id })}
           />
           <ListItemText
             style={{ textDecoration: completed ? "line-through" : "none" }}
@@ -33,11 +30,14 @@ const Todo = ({ task, completed, removeTodo, toggleTodo, updateTodo, id }) => {
             {task}
           </ListItemText>
           <ListItemSecondaryAction>
-            <IconButton>
-              <DeleteIcon aria-label="Delete" onClick={() => removeTodo(id)} />
+            <IconButton
+              aria-label="Delete"
+              onClick={() => dispatch({ type: "REMOVE", todoId: id })}
+            >
+              <DeleteIcon />
             </IconButton>
-            <IconButton>
-              <EditIcon aria-label="Edit" onClick={toggle} />
+            <IconButton aria-label="Edit" onClick={toggle}>
+              <EditIcon />
             </IconButton>
           </ListItemSecondaryAction>
         </>
