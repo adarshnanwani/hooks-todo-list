@@ -6,21 +6,14 @@ import Todo from "./Todo";
 import { TodosContext } from "./contexts/todos.context";
 
 const TodoList = () => {
-  const { todos, removeTodo, toggleTodo, updateTodo } = useContext(
-    TodosContext
-  );
+  const todos = useContext(TodosContext);
   if (todos.length)
     return (
       <Paper>
         <List>
           {todos.map((todo, i) => (
             <Fragment key={todo.id}>
-              <Todo
-                {...todo}
-                removeTodo={removeTodo}
-                toggleTodo={toggleTodo}
-                updateTodo={updateTodo}
-              />
+              <Todo {...todo} />
               {i < todos.length - 1 && <Divider />}
             </Fragment>
           ))}
