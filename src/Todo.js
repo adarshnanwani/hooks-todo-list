@@ -33,11 +33,11 @@ const Todo = ({ task, completed, removeTodo, toggleTodo, updateTodo, id }) => {
             {task}
           </ListItemText>
           <ListItemSecondaryAction>
-            <IconButton>
-              <DeleteIcon aria-label="Delete" onClick={() => removeTodo(id)} />
+            <IconButton aria-label="Delete" onClick={() => removeTodo(id)}>
+              <DeleteIcon />
             </IconButton>
-            <IconButton>
-              <EditIcon aria-label="Edit" onClick={toggle} />
+            <IconButton aria-label="Edit" onClick={toggle}>
+              <EditIcon />
             </IconButton>
           </ListItemSecondaryAction>
         </>
